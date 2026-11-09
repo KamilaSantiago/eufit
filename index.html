@@ -6,13 +6,13 @@
 <meta name="theme-color" content="#f6dce7">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="My Workout">
+<meta name="apple-mobile-web-app-title" content="eufit">
 <title>My Workout</title>
 <style>
 :root{--bg:#fff8fb;--pink:#f3d4e1;--rose:#a64e73;--deep:#632d48;--ink:#342630;--muted:#826c78;--line:#ebc4d4;--white:#fff}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",poppins}
 header{padding:26px 18px 18px;background:linear-gradient(145deg,#f9e7ee,#f1cddd);border-radius:0 0 24px 24px}
-h1{margin:0;color:var(--deep);font:700 27px Georgia,serif;letter-spacing:.2px}header p{margin:7px 0 0;color:#80566a}
+h1{margin:0;color:var(--deep);font:700 27px Georgia,serif;letter-spacing:.2px}header p{margin:7px 0 0;color:#722F37}
 main{max-width:760px;margin:auto;padding:14px 14px 40px}.tabs{display:flex;gap:7px;overflow:auto;padding:4px 0 12px}
 .tabs button{flex:0 0 auto;border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 14px;color:var(--deep);font-weight:650}
 .tabs button.active{background:var(--rose);color:#fff;border-color:var(--rose)}
@@ -35,7 +35,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:15px}
 </style>
 </head>
 <body>
-<header><h1>MY WORKOUT ♡</h1><p>Treino, consistência e evolução.</p></header>
+<header><h1>eufit</h1><p>você consegue, pense nos glúteos fartos.</p></header>
 <main>
 <div class="tabs" id="tabs"></div>
 <section class="panel" id="workout"></section>
@@ -45,13 +45,12 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:15px}
 <button onclick="setTimer(60)">60 s</button><button onclick="setTimer(90)">90 s</button><button onclick="setTimer(120)">120 s</button><button onclick="toggleTimer()" id="start">Iniciar</button><button onclick="resetTimer()">Zerar</button>
 </div></div><p class="note" id="timerMsg" aria-live="polite">O cronômetro continua enquanto esta tela estiver aberta.</p>
 </section>
-<section class="panel"><h2>Orientações</h2><p class="note">Registre a carga de cada série. Marque o exercício quando terminar. Os dados ficam salvos neste navegador, neste aparelho. Faça cópia das suas anotações se trocar de celular ou limpar os dados do Safari.</p><p class="note">Use cargas que permitam execução controlada e mantenha, em geral, 1–2 repetições em reserva. Ajuste o treino com seu profissional de educação física.</p></section>
-</main>
-<footer>MY WORKOUT · seus registros ficam no seu aparelho</footer>
+<section class="panel"><h2>Orientações</h2><p class="note">Registre a carga de cada série e lembre de marcar o exercício quando terminar.</p><p class="note">
+<footer>eufit > mantenha o foco :) </footer>
 <script>
 const plans=[
 {day:"Segunda",title:"Inferiores A — Glúteo + Quadríceps",cardio:"Esteira inclinada · 15 min",abs:"Crunch na polia · 2 séries",items:[
-["Elevação pélvica",3,"8–12"],["Agachamento búlgaro",2,"10–12"],["Agachamento no Smith (substitui hack)",2,"8–12"],["Cadeira extensora",2,"12–15"],["Cadeira abdutora",2,"15–20"],["Abdômen na polia (crunch)",2,"12–15"]]},
+["Elevação pélvica",3,"8–12"],["Agachamento búlgaro",2,"10–12"],["Agachamento Sumô",2,"8–12"],["Cadeira extensora",2,"12–15"],["Cadeira abdutora",2,"15–20"],["Abdômen na polia (crunch)",2,"12–15"]]},
 {day:"Terça",title:"Superiores A — Costas + Bíceps",cardio:"Bicicleta · 25 min",abs:"Elevação de pernas · 2 séries",items:[
 ["Puxada alta aberta",3,"8–12"],["Remada baixa articulada",3,"8–12"],["Remada unilateral com halter",2,"10–12"],["Pulldown com braços estendidos",2,"12–15"],["Rosca direta na polia",2,"10–12"],["Rosca alternada com halteres",2,"10–12"],["Abdômen infra (elevação de pernas)",2,"12–15"]]},
 {day:"Quarta",title:"Inferiores B — Glúteo + Posteriores",cardio:"Esteira leve · 15 min",abs:"Prancha · 2 séries de 30–45 s",items:[
@@ -59,7 +58,7 @@ const plans=[
 {day:"Quinta",title:"Superiores B — Ombros + Tríceps",cardio:"Bicicleta · 25 min",abs:"Abdominal bicicleta · 2 séries",items:[
 ["Desenvolvimento com halteres",2,"8–12"],["Elevação lateral",3,"12–15"],["Crucifixo inverso na máquina",2,"12–15"],["Tríceps corda",3,"10–12"],["Tríceps unilateral na polia",2,"10–12"],["Tríceps barra na polia",2,"10–12"],["Abdominal bicicleta",2,"15–20"]]},
 {day:"Sexta",title:"Inferiores C — Glúteo + Quadríceps",cardio:"Esteira inclinada · 15 min",abs:"Abdominal na máquina · 2 séries",items:[
-["Agachamento sumô",2,"10–12"],["Leg press (pés um pouco mais altos)",2,"10–12"],["Elevação pélvica",2,"10–12"],["Cadeira extensora",2,"12–15"],["Cadeira abdutora",2,"15–20"],["Abdômen na máquina",2,"12–15"]]}
+["Agachamento Hack",2,"10–12"],["Leg press",2,"10–12"],["Elevação pélvica",2,"10–12"],["Cadeira extensora",2,"12–15"],["Cadeira abdutora",2,"15–20"],["Abdômen na máquina",2,"12–15"]]}
 ];
 const KEY="myWorkout_v1";let data=JSON.parse(localStorage.getItem(KEY)||"{}");let selected=0;
 function save(){localStorage.setItem(KEY,JSON.stringify(data))}
