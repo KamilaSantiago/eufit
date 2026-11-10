@@ -6,8 +6,8 @@
 <meta name="theme-color" content="#fce4ec">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="My Workout">
-<title>eufit</title>
+<meta name="apple-mobile-web-app-title" content="eufit">
+<title>eufit - Treinos</title>
 <style>
 :root{
   --bg:#fff5f8;
@@ -182,7 +182,8 @@ function touchMove(e, i){
   currentX = e.touches[0].clientX - startX;
   if(currentX > 0){
     activeEl.style.transform = `translateX(${currentX}px)`;
-    document.getElementById(`bg-${i}`).style.opacity = Math.min(currentX / 100, 1);
+    const bg = document.getElementById(`bg-${i}`);
+    if(bg) bg.style.opacity = Math.min(currentX / 100, 1);
   }
 }
 function touchEnd(e, k, i){
@@ -192,7 +193,8 @@ function touchEnd(e, k, i){
     update(k, 'checked', !v.checked);
   } else {
     activeEl.style.transform = '';
-    document.getElementById(`bg-${i}`).style.opacity = 0;
+    const bg = document.getElementById(`bg-${i}`);
+    if(bg) bg.style.opacity = 0;
   }
   startX = 0; currentX = 0; activeEl = null;
 }
