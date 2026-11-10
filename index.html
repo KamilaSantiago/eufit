@@ -70,28 +70,29 @@
             font-weight: 300;
         }
 
-        /* Container da Imagem com bordas arredondadas */
-        .image-wrapper {
-            width: 100%;
-            max-width: 380px;
-            height: 380px;
-            border-radius: 28px;
-            overflow: hidden;
-            box-shadow: 0 15px 35px rgba(107, 36, 50, 0.12);
-            border: 4px solid #ffffff;
-            transition: transform 0.3s ease;
-        }
+/* Container da Imagem com bordas menos arredondadas */
+.image-wrapper {
+    width: 100%;
+    max-width: 380px;
+    height: 480px; /* Aumentamos um pouco a altura para acomodar fotos verticais */
+    border-radius: 14px; /* <--- Diminuído aqui (era 28px) para ficar menos arredondado */
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(107, 36, 50, 0.12);
+    border: 4px solid #ffffff;
+    transition: transform 0.3s ease;
+}
 
-        .image-wrapper:hover {
-            transform: translateY(-5px);
-        }
+.image-wrapper:hover {
+    transform: translateY(-5px);
+}
 
-        .image-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
+.image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* <--- Altere de 'cover' para 'contain' para NÃO cortar a foto */
+    background-color: var(--rosa-bebe-card); /* Cor de fundo suave caso fiquem sobras nas laterais */
+    display: block;
+}
 
         /* Botão estilizado */
         .btn-iniciar {
