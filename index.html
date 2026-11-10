@@ -3,157 +3,217 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#f6dce7">
+<meta name="theme-color" content="#fce4ec">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="My Workout">
 <title>My Workout</title>
 <style>
-:root{--bg:#fff8fb;--pink:#f3d4e1;--rose:#a64e73;--deep:#632d48;--ink:#342630;--muted:#826c78;--line:#ebc4d4;--white:#fff}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-header{padding:26px 18px 18px;background:linear-gradient(145deg,#f9e7ee,#f1cddd);border-radius:0 0 24px 24px}
-h1{margin:0;color:var(--deep);font:700 27px Georgia,serif;letter-spacing:.2px}header p{margin:7px 0 0;color:#80566a}
-main{max-width:760px;margin:auto;padding:14px 14px 40px}.tabs{display:flex;gap:7px;overflow:auto;padding:4px 0 12px}
-.tabs button{flex:0 0 auto;border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 14px;color:var(--deep);font-weight:650}
-.tabs button.active{background:var(--rose);color:#fff;border-color:var(--rose)}
-.panel{background:#fff;border:1px solid var(--line);border-radius:17px;padding:15px;margin-bottom:13px;box-shadow:0 3px 14px #7c38500b}
-h2{font:700 20px Georgia,serif;color:var(--deep);margin:0 0 4px}.sub{color:var(--muted);font-size:13px;margin-bottom:12px}
-.exercise{border-top:1px solid #f1dce5;padding:12px 0}.exercise:first-of-type{border-top:0}
-.exhead{display:flex;align-items:flex-start;gap:10px}.exhead input[type=checkbox]{width:20px;height:20px;accent-color:var(--rose);margin:1px 0 0}
-.exname{font-weight:700;flex:1}.prescription{color:var(--muted);font-size:12px;margin-top:3px}
-.sets{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:10px 0 0 30px}
+:root{
+  --bg:#fff5f8;
+  --baby-pink:#fce4ec;
+  --soft-pink:#f8bbd0;
+  --vinho:#581225;
+  --vinho-light:#722238;
+  --ink:#3d1a24;
+  --muted:#8c6b75;
+  --line:#f4c2d1;
+  --white:#ffffff;
+  --green:#2e7d32;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;user-select:none}
+header{padding:26px 18px 18px;background:linear-gradient(145deg,var(--baby-pink),var(--soft-pink));border-radius:0 0 24px 24px}
+h1{margin:0;color:var(--vinho);font:700 27px Georgia,serif;letter-spacing:.2px}
+header p{margin:7px 0 0;color:var(--vinho-light)}
+main{max-width:760px;margin:auto;padding:14px 14px 40px}
+.tabs{display:flex;gap:7px;overflow:auto;padding:4px 0 12px}
+.tabs button{flex:0 0 auto;border:1px solid var(--line);background:var(--white);border-radius:999px;padding:10px 14px;color:var(--vinho);font-weight:650;cursor:pointer}
+.tabs button.active{background:var(--vinho);color:var(--white);border-color:var(--vinho)}
+.panel{background:var(--white);border:1px solid var(--line);border-radius:17px;padding:15px;margin-bottom:13px;box-shadow:0 3px 14px rgba(88,18,37,0.05)}
+h2{font:700 20px Georgia,serif;color:var(--vinho);margin:0 0 4px}
+.sub{color:var(--muted);font-size:13px;margin-bottom:12px}
+
+/* Exercícios & Swipe / Drag */
+.exercise-wrapper{position:relative;overflow:hidden;border-top:1px solid var(--baby-pink);margin-top:4px}
+.exercise-wrapper:first-of-type{border-top:0}
+.swipe-bg{position:absolute;top:0;left:0;bottom:0;width:100%;background:var(--soft-pink);color:var(--vinho);display:flex;align-items:center;padding-left:20px;font-weight:bold;border-radius:12px;opacity:0;transition:opacity .2s}
+.exercise{position:relative;background:var(--white);padding:12px 0;transition:transform .15s ease-out;touch-action:pan-y}
+.exercise.dragging{opacity:0.4;background:var(--baby-pink)}
+.exhead{display:flex;align-items:center;gap:10px}
+.drag-handle{cursor:grab;color:var(--muted);font-size:18px;padding:0 4px;touch-action:none}
+.exhead input[type=checkbox]{width:22px;height:22px;accent-color:var(--vinho);cursor:pointer}
+.exname{font-weight:700;flex:1;color:var(--vinho)}
+.prescription{color:var(--muted);font-size:12px;margin-top:3px;font-weight:normal}
+.sets{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:10px 0 0 34px}
 label{font-size:11px;color:var(--muted);display:block;margin-bottom:4px}
-input[type=number]{width:100%;border:1px solid var(--line);border-radius:9px;padding:9px;background:#fffafd;color:var(--ink);font-size:14px}
-.smallbtn{border:0;border-radius:10px;background:#f8e7ee;color:var(--deep);padding:9px 12px;font-weight:650}
+input[type=number]{width:100%;border:1px solid var(--line);border-radius:9px;padding:9px;background:#fff9fb;color:var(--ink);font-size:14px}
+input[type=number]:focus{outline:none;border-color:var(--vinho)}
+
 .timer{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
-.time{font-size:31px;font-weight:750;color:var(--deep);font-variant-numeric:tabular-nums}
-.timercontrols{display:flex;gap:6px;flex-wrap:wrap}.timercontrols button{border:1px solid var(--line);background:#fff7fa;border-radius:9px;padding:8px 10px;color:var(--deep)}
-.progress{height:8px;background:#f5e5ec;border-radius:9px;overflow:hidden;margin-top:10px}.bar{height:100%;width:0;background:var(--rose);transition:width .2s}
-.note{font-size:12px;color:var(--muted);line-height:1.5}.done{color:#498568}
+.time{font-size:31px;font-weight:750;color:var(--vinho);font-variant-numeric:tabular-nums}
+.timercontrols{display:flex;gap:6px;flex-wrap:wrap}
+.timercontrols button{border:1px solid var(--line);background:var(--baby-pink);border-radius:999px;padding:8px 14px;color:var(--vinho);font-weight:600;cursor:pointer}
+.timercontrols button:hover{background:var(--soft-pink)}
+.progress{height:8px;background:var(--baby-pink);border-radius:999px;overflow:hidden;margin-top:10px}
+.bar{height:100%;width:0;background:var(--vinho);transition:width .2s}
+.note{font-size:12px;color:var(--muted);line-height:1.5}
 footer{text-align:center;color:var(--muted);font-size:12px;padding:15px}
-@media(min-width:620px){.exercise{display:block}.sets{max-width:430px}}
+@media(min-width:620px){.sets{max-width:430px}}
 </style>
 </head>
 <body>
-<header><h1>MY WORKOUT ♡</h1><p>Treino, consistência e evolução.</p></header>
+<header>
+  <h1>eufit</h1>
+  <p>pense nos glúteos fartos.</p>
+</header>
 <main>
 <div class="tabs" id="tabs"></div>
 <section class="panel" id="workout"></section>
+
+<!-- Cronômetro de Cardio -->
 <section class="panel">
-<h2>Cronômetro de descanso</h2><div class="sub">Escolha o intervalo e inicie a contagem regressiva.</div>
-<div class="timer"><div class="time" id="clock">01:30</div><div class="timercontrols">
-<button onclick="setTimer(60)">60 s</button><button onclick="setTimer(90)">90 s</button><button onclick="setTimer(120)">120 s</button><button onclick="toggleTimer()" id="start">Iniciar</button><button onclick="resetTimer()">Zerar</button>
-</div></div><p class="note" id="timerMsg" aria-live="polite">O cronômetro continua enquanto esta tela estiver aberta.</p>
+  <h2>Cardio (25 min)</h2>
+  <div class="sub">Contagem regressiva para o seu treino aeróbico.</div>
+  <div class="timer">
+    <div class="time" id="cardioClock">25:00</div>
+    <div class="timercontrols">
+      <button onclick="toggleCardioTimer()" id="cardioStart">Iniciar</button>
+      <button onclick="resetCardioTimer()">Zerar</button>
+    </div>
+  </div>
+  <p class="note" id="cardioMsg" aria-live="polite">Clique em iniciar para começar o cardio.</p>
 </section>
-<section class="panel"><h2>Orientações</h2><p class="note">Registre a carga de cada série. Marque o exercício quando terminar. Os dados ficam salvos neste navegador, neste aparelho. Faça cópia das suas anotações se trocar de celular ou limpar os dados do Safari.</p><p class="note">Use cargas que permitam execução controlada e mantenha, em geral, 1–2 repetições em reserva. Ajuste o treino com seu profissional de educação física.</p></section>
+
+<!-- Cronômetro de Descanso -->
+<section class="panel">
+  <h2>Cronômetro de descanso</h2>
+  <div class="sub">Escolha o intervalo e inicie a contagem regressiva.</div>
+  <div class="timer">
+    <div class="time" id="clock">01:30</div>
+    <div class="timercontrols">
+      <button onclick="setTimer(60)">60 s</button>
+      <button onclick="setTimer(90)">90 s</button>
+      <button onclick="setTimer(120)">120 s</button>
+      <button onclick="toggleTimer()" id="start">Iniciar</button>
+      <button onclick="resetTimer()">Zerar</button>
+    </div>
+  </div>
+  <p class="note" id="timerMsg" aria-live="polite">O cronômetro continua enquanto esta tela estiver aberta.</p>
+</section>
+
+<section class="panel">
+  <h2>Orientações</h2>
+  <p class="note">Arraste pelo ícone ☰ para reordenar os exercícios. Deslize o card para a direita para marcar como concluído.</p>
+  <p class="note">Registre a carga de cada série. Os dados ficam salvos neste navegador.</p>
+</section>
 </main>
 <footer>MY WORKOUT · seus registros ficam no seu aparelho</footer>
+
 <script>
-const plans=[
-<!doctype html>
-<html lang="pt-BR">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#f6dce7">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="My Workout">
-<title>My Workout</title>
-<style>
-:root{--bg:#fff8fb;--pink:#f3d4e1;--rose:#a64e73;--deep:#632d48;--ink:#342630;--muted:#826c78;--line:#ebc4d4;--white:#fff}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-header{padding:26px 18px 18px;background:linear-gradient(145deg,#f9e7ee,#f1cddd);border-radius:0 0 24px 24px}
-h1{margin:0;color:var(--deep);font:700 27px Georgia,serif;letter-spacing:.2px}header p{margin:7px 0 0;color:#80566a}
-main{max-width:760px;margin:auto;padding:14px 14px 40px}.tabs{display:flex;gap:7px;overflow:auto;padding:4px 0 12px}
-.tabs button{flex:0 0 auto;border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 14px;color:var(--deep);font-weight:650}
-.tabs button.active{background:var(--rose);color:#fff;border-color:var(--rose)}
-.panel{background:#fff;border:1px solid var(--line);border-radius:17px;padding:15px;margin-bottom:13px;box-shadow:0 3px 14px #7c38500b}
-h2{font:700 20px Georgia,serif;color:var(--deep);margin:0 0 4px}.sub{color:var(--muted);font-size:13px;margin-bottom:12px}
-.exercise{border-top:1px solid #f1dce5;padding:12px 0}.exercise:first-of-type{border-top:0}
-.exhead{display:flex;align-items:flex-start;gap:10px}.exhead input[type=checkbox]{width:20px;height:20px;accent-color:var(--rose);margin:1px 0 0}
-.exname{font-weight:700;flex:1}.prescription{color:var(--muted);font-size:12px;margin-top:3px}
-.sets{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:10px 0 0 30px}
-label{font-size:11px;color:var(--muted);display:block;margin-bottom:4px}
-input[type=number]{width:100%;border:1px solid var(--line);border-radius:9px;padding:9px;background:#fffafd;color:var(--ink);font-size:14px}
-.smallbtn{border:0;border-radius:10px;background:#f8e7ee;color:var(--deep);padding:9px 12px;font-weight:650}
-.timer{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
-.time{font-size:31px;font-weight:750;color:var(--deep);font-variant-numeric:tabular-nums}
-.timercontrols{display:flex;gap:6px;flex-wrap:wrap}.timercontrols button{border:1px solid var(--line);background:#fff7fa;border-radius:9px;padding:8px 10px;color:var(--deep)}
-.progress{height:8px;background:#f5e5ec;border-radius:9px;overflow:hidden;margin-top:10px}.bar{height:100%;width:0;background:var(--rose);transition:width .2s}
-.note{font-size:12px;color:var(--muted);line-height:1.5}.done{color:#498568}
-footer{text-align:center;color:var(--muted);font-size:12px;padding:15px}
-@media(min-width:620px){.exercise{display:block}.sets{max-width:430px}}
-</style>
-</head>
-<body>
-<header><h1>MY WORKOUT ♡</h1><p>Treino, consistência e evolução.</p></header>
-<main>
-<div class="tabs" id="tabs"></div>
-<section class="panel" id="workout"></section>
-<section class="panel">
-<h2>Cronômetro de descanso</h2><div class="sub">Escolha o intervalo e inicie a contagem regressiva.</div>
-<div class="timer"><div class="time" id="clock">01:30</div><div class="timercontrols">
-<button onclick="setTimer(60)">60 s</button><button onclick="setTimer(90)">90 s</button><button onclick="setTimer(120)">120 s</button><button onclick="toggleTimer()" id="start">Iniciar</button><button onclick="resetTimer()">Zerar</button>
-</div></div><p class="note" id="timerMsg" aria-live="polite">O cronômetro continua enquanto esta tela estiver aberta.</p>
-</section>
-<section class="panel"><h2>Orientações</h2><p class="note">Registre a carga de cada série. Marque o exercício quando terminar. Os dados ficam salvos neste navegador, neste aparelho. Faça cópia das suas anotações se trocar de celular ou limpar os dados do Safari.</p><p class="note">Use cargas que permitam execução controlada e mantenha, em geral, 1–2 repetições em reserva. Ajuste o treino com seu profissional de educação física.</p></section>
-</main>
-<footer>MY WORKOUT · seus registros ficam no seu aparelho</footer>
-<script>
-const plans=[
-{day:"Segunda",title:"Inferiores A — Glúteo + Quadríceps",cardio:"Esteira inclinada · 15 min",abs:"Crunch na polia · 2 séries",items:[
-["Elevação pélvica",3,"8–12"],["Agachamento búlgaro",2,"10–12"],["Agachamento no Smith (substitui hack)",2,"8–12"],["Cadeira extensora",2,"12–15"],["Cadeira abdutora",2,"15–20"],["Abdômen na polia (crunch)",2,"12–15"]]},
-{day:"Terça",title:"Superiores A — Costas + Bíceps",cardio:"Bicicleta · 25 min",abs:"Elevação de pernas · 2 séries",items:[
-["Puxada alta aberta",3,"8–12"],["Remada baixa articulada",3,"8–12"],["Remada unilateral com halter",2,"10–12"],["Pulldown com braços estendidos",2,"12–15"],["Rosca direta na polia",2,"10–12"],["Rosca alternada com halteres",2,"10–12"],["Abdômen infra (elevação de pernas)",2,"12–15"]]},
-{day:"Quarta",title:"Inferiores B — Glúteo + Posteriores",cardio:"Esteira leve · 15 min",abs:"Prancha · 2 séries de 30–45 s",items:[
-["Levantamento terra sumô",2,"8–10"],["Stiff ou RDL",2,"8–12"],["Step up",2,"10–12"],["Mesa flexora",2,"10–15"],["Coice na polia",2,"12–15"],["Cadeira abdutora",2,"15–20"],["Prancha abdominal",2,"30–45 s"]]},
-{day:"Quinta",title:"Superiores B — Ombros + Tríceps",cardio:"Bicicleta · 25 min",abs:"Abdominal bicicleta · 2 séries",items:[
-["Desenvolvimento com halteres",2,"8–12"],["Elevação lateral",3,"12–15"],["Crucifixo inverso na máquina",2,"12–15"],["Tríceps corda",3,"10–12"],["Tríceps unilateral na polia",2,"10–12"],["Tríceps barra na polia",2,"10–12"],["Abdominal bicicleta",2,"15–20"]]},
-{day:"Sexta",title:"Inferiores C — Glúteo + Quadríceps",cardio:"Esteira inclinada · 15 min",abs:"Abdominal na máquina · 2 séries",items:[
-["Agachamento sumô",2,"10–12"],["Leg press (pés um pouco mais altos)",2,"10–12"],["Elevação pélvica",2,"10–12"],["Cadeira extensora",2,"12–15"],["Cadeira abdutora",2,"15–20"],["Abdômen na máquina",2,"12–15"]]}
+const defaultPlans=[
+  {day:"Segunda",title:"Inferiores A — Glúteo + Quadríceps",cardio:"Esteira inclinada ou escada ou heliptico · 15 min",abs:"Crunch na polia · 2 séries",items:[["Elevação pélvica",3,"8–12"],["Agachamento búlgaro",2,"10–12"],["Agachamento no Smith (substitui hack)",2,"8–12"],["Cadeira extensora",2,"12–15"],["Cadeira abdutora",2,"15–20"],["Abdômen na polia (crunch)",2,"12–15"]]},
+  {day:"Terça",title:"Superiores A — Costas + Bíceps",cardio:"Bicicleta · 25 min",abs:"Elevação de pernas · 2 séries",items:[["Puxada alta aberta",3,"8–12"],["Remada baixa articulada",3,"8–12"],["Remada unilateral com halter",2,"10–12"],["Pulldown com braços estendidos",2,"12–15"],["Rosca direta na polia",2,"10–12"],["Rosca alternada com halteres",2,"10–12"],["Abdômen infra (elevação de pernas)",2,"12–15"]]},
+  {day:"Quarta",title:"Inferiores B — Glúteo + Posteriores",cardio:"Esteira leve · 15 min",abs:"Abdominal Crunch · 2 séries de 30–45 s",items:[["Levantamento terra sumô",2,"8–10"],["Stiff ou RDL",2,"8–12"],["Step up",2,"10–12"],["Mesa flexora",2,"10–15"],["Coice na polia",2,"12–15"],["Cadeira abdutora",2,"15–20"],["Prancha abdominal",2,"30–45 s"]]},
+  {day:"Quinta",title:"Superiores B — Ombros + Tríceps",cardio:"Bicicleta · 25 min",abs:"Abdominal bicicleta · 2 séries",items:[["Desenvolvimento com halteres",2,"8–12"],["Elevação lateral",3,"12–15"],["Crucifixo inverso na máquina",2,"12–15"],["Tríceps corda",3,"10–12"],["Tríceps unilateral na polia",2,"10–12"],["Tríceps barra na polia",2,"10–12"],["Abdominal bicicleta",2,"15–20"]]},
+  {day:"Sexta",title:"Inferiores C — Glúteo + Quadríceps",cardio:"Esteira inclinada ou escada ou heliptico · 15 min",abs:"Abdominal infra  · 2 séries",items:[["Agachamento sumô",2,"10–12"],["Leg press (pés um pouco mais altos)",2,"10–12"],["Elevação pélvica",2,"10–12"],["Cadeira extensora",2,"12–15"],["Cadeira abdutora",2,"15–20"],["Abdômen na máquina",2,"12–15"]]}
 ];
-const KEY="myWorkout_v1";let data=JSON.parse(localStorage.getItem(KEY)||"{}");let selected=0;
+
+const KEY="myWorkout_v2";
+let data=JSON.parse(localStorage.getItem(KEY)||"{}");
+if(!data.plans) data.plans = defaultPlans;
+let selected=0;
+
 function save(){localStorage.setItem(KEY,JSON.stringify(data))}
-function id(d,i){return d+"_"+i}
+function id(d,name){return d+"_"+name}
+
 function render(){
- document.getElementById("tabs").innerHTML=plans.map((p,i)=>`<button class="${i===selected?"active":""}" onclick="selected=${i};render()">${p.day}</button>`).join("");
- const p=plans[selected],root=document.getElementById("workout");
- let done=0;
- const rows=p.items.map((e,i)=>{let k=id(selected,i),v=data[k]||{checked:false,loads:[]};if(v.checked)done++;
- return `<div class="exercise"><div class="exhead"><input aria-label="Concluir ${e[0]}" type="checkbox" ${v.checked?"checked":""} onchange="update('${k}','checked',this.checked)"><div class="exname">${e[0]}<div class="prescription">${e[1]} séries · ${e[2]} repetições</div></div></div><div class="sets">${Array.from({length:e[1]},(_,s)=>`<div><label>Série ${s+1} · kg</label><input type="number" min="0" step="0.5" inputmode="decimal" placeholder="Carga" value="${v.loads?.[s]??""}" onchange="load('${k}',${s},this.value)"></div>`).join("")}</div></div>`}).join("");
- root.innerHTML=`<h2>${p.day}-feira</h2><div class="sub">${p.title}</div><div class="progress"><div class="bar" style="width:${done/p.items.length*100}%"></div></div><p class="note">${done} de ${p.items.length} exercícios concluídos</p>${rows}<div class="note" style="border-top:1px solid #f1dce5;padding-top:12px"><b>Cardio:</b> ${p.cardio}<br><b>Abdômen:</b> ${p.abs}</div>`;
+  document.getElementById("tabs").innerHTML=data.plans.map((p,i)=>`<button class="${i===selected?"active":""}" onclick="selected=${i};render()">${p.day}</button>`).join("");
+  const p=data.plans[selected],root=document.getElementById("workout");
+  let done=0;
+
+  const rows=p.items.map((e,i)=>{
+    let k=id(selected,e[0]),v=data[k]||{checked:false,loads:[]};
+    if(v.checked)done++;
+    return `
+    <div class="exercise-wrapper">
+      <div class="swipe-bg" id="bg-${i}">✓ Concluído</div>
+      <div class="exercise" draggable="true" data-index="${i}" ondragstart="dragStart(event)" ondragover="dragOver(event)" ondrop="drop(event)" ontouchstart="touchStart(event, ${i})" ontouchmove="touchMove(event, ${i})" ontouchend="touchEnd(event, '${k}', ${i})">
+        <div class="exhead">
+          <span class="drag-handle" title="Arrastar para reordenar">☰</span>
+          <input aria-label="Concluir ${e[0]}" type="checkbox" ${v.checked?"checked":""} onchange="update('${k}','checked',this.checked)">
+          <div class="exname">${e[0]}<div class="prescription">${e[1]} séries · ${e[2]} repetições</div></div>
+        </div>
+        <div class="sets">${Array.from({length:e[1]},(_,s)=>`<div><label>Série ${s+1} · kg</label><input type="number" min="0" step="0.5" inputmode="decimal" placeholder="Carga" value="${v.loads?.[s]??""}" onchange="load('${k}',${s},this.value)"></div>`).join("")}</div>
+      </div>
+    </div>`;
+  }).join("");
+
+  root.innerHTML=`<h2>${p.day}-feira</h2><div class="sub">${p.title}</div><div class="progress"><div class="bar" style="width:${done/p.items.length*100}%"></div></div><p class="note">${done} de ${p.items.length} exercícios concluídos</p>${rows}<div class="note" style="border-top:1px solid var(--baby-pink);padding-top:12px;margin-top:10px"><b>Cardio sugerido:</b> ${p.cardio}<br><b>Abdômen:</b> ${p.abs}</div>`;
 }
+
 function update(k,f,v){data[k]=data[k]||{loads:[]};data[k][f]=v;save();render()}
 function load(k,s,v){data[k]=data[k]||{loads:[]};data[k].loads=data[k].loads||[];data[k].loads[s]=v;save()}
+
+/* Lógica de Arrastar e Soltar (Drag and Drop / Reordenar) */
+let draggedIndex = null;
+function dragStart(e){draggedIndex = +e.currentTarget.dataset.index; e.currentTarget.classList.add('dragging');}
+function dragOver(e){e.preventDefault();}
+function drop(e){
+  e.preventDefault();
+  const targetIndex = +e.currentTarget.dataset.index;
+  if(draggedIndex !== null && draggedIndex !== targetIndex){
+    const items = data.plans[selected].items;
+    const [moved] = items.splice(draggedIndex, 1);
+    items.splice(targetIndex, 0, moved);
+    save();
+    render();
+  }
+}
+
+/* Lógica de Arrastar para o Lado (Swipe to Complete) */
+let startX = 0, currentX = 0, activeEl = null;
+function touchStart(e, i){
+  if(e.target.tagName === 'INPUT' || e.target.classList.contains('drag-handle')) return;
+  startX = e.touches[0].clientX;
+  activeEl = e.currentTarget;
+}
+function touchMove(e, i){
+  if(!startX || !activeEl) return;
+  currentX = e.touches[0].clientX - startX;
+  if(currentX > 0){
+    activeEl.style.transform = `translateX(${currentX}px)`;
+    document.getElementById(`bg-${i}`).style.opacity = Math.min(currentX / 100, 1);
+  }
+}
+function touchEnd(e, k, i){
+  if(!activeEl) return;
+  if(currentX > 100){
+    let v = data[k]||{checked:false,loads:[]};
+    update(k, 'checked', !v.checked);
+  } else {
+    activeEl.style.transform = '';
+    document.getElementById(`bg-${i}`).style.opacity = 0;
+  }
+  startX = 0; currentX = 0; activeEl = null;
+}
+
+/* Cronômetro de Descanso */
 let remaining=90,interval=null;
 function paint(){let m=String(Math.floor(remaining/60)).padStart(2,"0"),s=String(remaining%60).padStart(2,"0");document.getElementById("clock").textContent=m+":"+s}
 function setTimer(n){pauseTimer();remaining=n;paint();document.getElementById("timerMsg").textContent="Descanso ajustado para "+n+" segundos."}
 function toggleTimer(){if(interval){pauseTimer();return}document.getElementById("start").textContent="Pausar";interval=setInterval(()=>{remaining--;paint();if(remaining<=0){pauseTimer();document.getElementById("timerMsg").textContent="Descanso concluído!";if(navigator.vibrate)navigator.vibrate([200,100,200])}},1000)}
 function pauseTimer(){if(interval)clearInterval(interval);interval=null;document.getElementById("start").textContent="Iniciar"}
 function resetTimer(){pauseTimer();remaining=90;paint();document.getElementById("timerMsg").textContent="Cronômetro zerado."}
-render();paint();
+
+/* Cronômetro de Cardio (25 min) */
+let cardioRemaining=1500, cardioInterval=null;
+function paintCardio(){let m=String(Math.floor(cardioRemaining/60)).padStart(2,"0"),s=String(cardioRemaining%60).padStart(2,"0");document.getElementById("cardioClock").textContent=m+":"+s}
+function toggleCardioTimer(){if(cardioInterval){pauseCardioTimer();return}document.getElementById("cardioStart").textContent="Pausar";cardioInterval=setInterval(()=>{cardioRemaining--;paintCardio();if(cardioRemaining<=0){pauseCardioTimer();document.getElementById("cardioMsg").textContent="Cardio concluído! Parabéns!";if(navigator.vibrate)navigator.vibrate([300,150,300])}},1000)}
+function pauseCardioTimer(){if(cardioInterval)clearInterval(cardioInterval);cardioInterval=null;document.getElementById("cardioStart").textContent="Iniciar"}
+function resetCardioTimer(){pauseCardioTimer();cardioRemaining=1500;paintCardio();document.getElementById("cardioMsg").textContent="Cronômetro de cardio zerado."}
+
+render();paint();paintCardio();
 </script>
-</body></html>
-const KEY="myWorkout_v1";let data=JSON.parse(localStorage.getItem(KEY)||"{}");let selected=0;
-function save(){localStorage.setItem(KEY,JSON.stringify(data))}
-function id(d,i){return d+"_"+i}
-function render(){
- document.getElementById("tabs").innerHTML=plans.map((p,i)=>`<button class="${i===selected?"active":""}" onclick="selected=${i};render()">${p.day}</button>`).join("");
- const p=plans[selected],root=document.getElementById("workout");
- let done=0;
- const rows=p.items.map((e,i)=>{let k=id(selected,i),v=data[k]||{checked:false,loads:[]};if(v.checked)done++;
- return `<div class="exercise"><div class="exhead"><input aria-label="Concluir ${e[0]}" type="checkbox" ${v.checked?"checked":""} onchange="update('${k}','checked',this.checked)"><div class="exname">${e[0]}<div class="prescription">${e[1]} séries · ${e[2]} repetições</div></div></div><div class="sets">${Array.from({length:e[1]},(_,s)=>`<div><label>Série ${s+1} · kg</label><input type="number" min="0" step="0.5" inputmode="decimal" placeholder="Carga" value="${v.loads?.[s]??""}" onchange="load('${k}',${s},this.value)"></div>`).join("")}</div></div>`}).join("");
- root.innerHTML=`<h2>${p.day}-feira</h2><div class="sub">${p.title}</div><div class="progress"><div class="bar" style="width:${done/p.items.length*100}%"></div></div><p class="note">${done} de ${p.items.length} exercícios concluídos</p>${rows}<div class="note" style="border-top:1px solid #f1dce5;padding-top:12px"><b>Cardio:</b> ${p.cardio}<br><b>Abdômen:</b> ${p.abs}</div>`;
-}
-function update(k,f,v){data[k]=data[k]||{loads:[]};data[k][f]=v;save();render()}
-function load(k,s,v){data[k]=data[k]||{loads:[]};data[k].loads=data[k].loads||[];data[k].loads[s]=v;save()}
-let remaining=90,interval=null;
-function paint(){let m=String(Math.floor(remaining/60)).padStart(2,"0"),s=String(remaining%60).padStart(2,"0");document.getElementById("clock").textContent=m+":"+s}
-function setTimer(n){pauseTimer();remaining=n;paint();document.getElementById("timerMsg").textContent="Descanso ajustado para "+n+" segundos."}
-function toggleTimer(){if(interval){pauseTimer();return}document.getElementById("start").textContent="Pausar";interval=setInterval(()=>{remaining--;paint();if(remaining<=0){pauseTimer();document.getElementById("timerMsg").textContent="Descanso concluído!";if(navigator.vibrate)navigator.vibrate([200,100,200])}},1000)}
-function pauseTimer(){if(interval)clearInterval(interval);interval=null;document.getElementById("start").textContent="Iniciar"}
-function resetTimer(){pauseTimer();remaining=90;paint();document.getElementById("timerMsg").textContent="Cronômetro zerado."}
-render();paint();
-</script>
-</body></html>
+</body>
+</html>
